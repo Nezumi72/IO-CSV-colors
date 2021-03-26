@@ -164,9 +164,12 @@ class TEST_PT_sub_05(bpy.types.Panel):
         box = layout.box()
         col = box.column(align=True)
         if my_props.color_list:
-            me = my_props.f_details[my_props.color_list]
-            for key in me.keys():
-                col.label(text=f"{key}: {str(me[key])}")
+            try:
+                me = my_props.f_details[my_props.color_list]
+                for key in me.keys():
+                    col.label(text=f"{key}: {str(me[key])}")
+            except KeyError:
+                pass
         else:
             col.label(text='Color not Selected')
 
