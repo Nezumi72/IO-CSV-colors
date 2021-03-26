@@ -22,12 +22,6 @@ def upd_color_list(self, context):
         if len(my_icons) > 0:
             try:
                 my_icon = pcoll[test_str]
-            # except ValueError:
-            #     my_icon = None
-            # except IndexError:
-            #     my_icon = None
-            # except TypeError:
-            #     my_icon = None
             except KeyError:
                 my_icon = None
         else:
@@ -114,7 +108,7 @@ def load_csv(context):
                 me.id_name = me.id_name.replace(")", "")
                 me.id_name = me.id_name.replace("-", "")
                 me.id_name = me.id_name.replace("&", "")
-                me.name = me.id_name # modified to rename to idname
+                me.name = me.id_name
             if me_red != None:
                 me.red = row[me_red]
                 me.red_scaled = float(me.red)/(props.maplist[me_red].scale)

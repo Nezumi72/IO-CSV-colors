@@ -7,7 +7,6 @@ def sniff_csv(context):
     props = context.scene.test_pg
     props.f_headers.clear()
     props.maplist.clear()
-    # props.f_details.clear()
     with open(props.ip_csv_fname, mode='r') as f:
         reader = csv.DictReader(f, delimiter=',')
         for i, field in enumerate(reader.fieldnames):
