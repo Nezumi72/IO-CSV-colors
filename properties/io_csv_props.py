@@ -21,12 +21,12 @@ def upd_color_list(self, context):
         if len(my_icons) > 0:
             try:
                 my_icon = pcoll[test_str]
-            except ValueError:
-                my_icon = None
-            except IndexError:
-                my_icon = None
-            except TypeError:
-                my_icon = None
+            # except ValueError:
+            #     my_icon = None
+            # except IndexError:
+            #     my_icon = None
+            # except TypeError:
+            #     my_icon = None
             except KeyError:
                 my_icon = None
         else:
@@ -61,6 +61,13 @@ def upd_color_list(self, context):
                     my_icon.icon_id,
                     i
                     ))
+    if len(items) == 0:
+        items.append((
+            "None",
+            "None",
+            "None"
+        ))
+
     return items
 
 
