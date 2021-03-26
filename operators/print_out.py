@@ -15,7 +15,7 @@ class TEST_OT_print_csv(bpy.types.Operator):
     @classmethod
     def poll(cls, context):
         props = context.scene.test_pg
-        cond1 = len(props['f_details']) > 0
+        cond1 = len(props.f_details) > 0
         return cond1
 
     def execute(self, context):

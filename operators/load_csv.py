@@ -28,6 +28,8 @@ def upd_color_list(self, context):
                 my_icon = None
             except TypeError:
                 my_icon = None
+            except KeyError:
+                my_icon = None
         else:
             my_icon = None
         if not my_icon:
