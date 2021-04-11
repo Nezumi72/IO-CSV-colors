@@ -16,6 +16,7 @@ Blender
 # Enabling Addon
 
 Given this is intended as an example the addon is located in the Testing section.
+
 ![](readme%20images/addon_location.png)
 
 # Usage
@@ -50,8 +51,10 @@ Given this is intended as an example the addon is located in the Testing section
 
 * Sample operator does not require icon image only loaded data.
 * To view this effect in the 3d Viewport you must be in solid mode on viewport shader settings and in the viewport shader options set color to object.
+
 ![](readme%20images/viewport_obj_color.png)
 * Alternatively you may see the color swatch update in the properties panel; object tab; viewport display section.
+
 ![](readme%20images/prop_panel_obj_color.png)
 
 ### Color Details:
@@ -63,6 +66,7 @@ Given this is intended as an example the addon is located in the Testing section
 
 * Unfinished example of creating a palette from loaded data.
 * Name a palette then press enter to create the named palette.
+
 ![](readme%20images/palette_panel.png)
 
 ### Add selected to palette:
@@ -74,6 +78,7 @@ Given this is intended as an example the addon is located in the Testing section
 * As mentioned above this is unfinished example of working with a palette while not requiring an image mode context.
 
 ### Add selected to material:
+
 ![](readme%20images/Materials_subpanel.png)
 * Sample operator does not require icon image only loaded data.
 * For the active selected object each available `material_slot` will be parsed for every 'material'.
