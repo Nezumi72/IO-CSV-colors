@@ -107,18 +107,18 @@ class TEST_PG_maplist(bpy.types.PropertyGroup):
         name="map_list",
         default="None",
         )
-    scale:bpy.props.IntProperty(
+    scale: bpy.props.IntProperty(
         name="Scale",
         description="Scaling factor data/scale should be 0.0-1.0 range",
         min=1,
         max=360,
         default=1,
         )
-    include_flag:bpy.props.BoolProperty(
+    include_flag: bpy.props.BoolProperty(
         name="include_flag",
         description="Include in output CSV",
         default=False,
-        ) 
+        )
 
 
 class TEST_PG_details(bpy.types.PropertyGroup):
