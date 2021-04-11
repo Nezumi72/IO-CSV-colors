@@ -1,12 +1,12 @@
 import bpy
 
+
 class VIEW3D_PT_test(bpy.types.Panel):
     bl_space_type = 'VIEW_3D'
     bl_region_type = 'UI'
     bl_category = "Test Panel"
     bl_idname = "VIEW3D_PT_test"
     bl_label = "CSV Color Helper"
-
 
     def draw(self, context):
         props = context.scene.test_pg
@@ -48,12 +48,12 @@ class TEST_PT_sub_01(bpy.types.Panel):
             test = False
             try:
                 if int(item.sample) < 361:
-                    test=True
+                    test = True
             except ValueError:
                 pass
             try:
                 if float(item.sample) < 361:
-                    test=True
+                    test = True
             except ValueError:
                 pass
             if test:
@@ -75,7 +75,6 @@ class TEST_PT_sub_02(bpy.types.Panel):
     bl_label = "Export Options"
     bl_parent_id = "VIEW3D_PT_test"
     bl_options = {'DEFAULT_CLOSED'}
-
 
     def draw(self, context):
         props = context.scene.test_pg
@@ -111,7 +110,6 @@ class TEST_PT_sub_03(bpy.types.Panel):
     bl_label = "Save Images"
     bl_parent_id = "VIEW3D_PT_test"
     bl_options = {'DEFAULT_CLOSED'}
-
 
     def draw(self, context):
         props = context.scene.test_pg
@@ -199,6 +197,43 @@ class TEST_PT_sub_06(bpy.types.Panel):
                     row = box.row(align=True)
 
 
+class TEST_PT_sub_07(bpy.types.Panel):
+    bl_space_type = 'VIEW_3D'
+    bl_region_type = 'UI'
+    bl_category = "Testing"
+    bl_idname = "TEST_PT_sub_07"
+    bl_label = "Materials Colors"
+    bl_parent_id = "TEST_PT_sub_04"
+    bl_options = {'DEFAULT_CLOSED'}
+
+    def draw(self, context):
+        my_props = context.scene.test_pg
+        ob = context.object
+        layout = self.layout
+        box = layout.box()
+        col = box.column(align=True)
+        if ob:
+            col.label(text=f"Material color options for: {ob.name}")
+            for slot in ob.material_slots:
+                layout = self.layout
+                box = layout.box()
+                col = box.column(align=True)
+                col.label(text=f"Material slot: {slot.name}")
+                box = col.box()
+                for node in slot.material.node_tree.nodes:
+                    col = box.column(align=True)
+                    col.label(text=f"Node: {node.name}")
+                    for ip in node.inputs:
+                        if ip.type == 'RGBA':
+                            col.label(text=f"Color IP: {ip.name}")
+                            row = col.row()
+                            row.prop(ip, "default_value")
+                            props = row.operator("material.assign_lsrgb")
+                            props.mat = slot.name
+                            props.node = node.name
+                            props.ipname = ip.name
+
+
 classes = [
     VIEW3D_PT_test,
     TEST_PT_sub_01,
@@ -207,6 +242,7 @@ classes = [
     TEST_PT_sub_04,
     TEST_PT_sub_05,
     TEST_PT_sub_06,
+    TEST_PT_sub_07,
     ]
 
 
