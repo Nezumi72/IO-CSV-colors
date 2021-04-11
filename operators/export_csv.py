@@ -78,7 +78,10 @@ class TEST_OT_export_csv(bpy.types.Operator):
     def poll(cls, context):
         props = context.scene.test_pg
         cond1 = os.path.isdir(props.op_csv_dir)
-        cond2 = props.op_csv_fname.lower().endswith(".txt") or props.op_csv_fname.lower().endswith(".csv")
+        cond2 = (
+            props.op_csv_fname.lower().endswith(".txt") or
+            props.op_csv_fname.lower().endswith(".csv")
+            )
         return cond1 and cond2
 
     def execute(self, context):

@@ -4,6 +4,13 @@ import colorsys
 from ..config import config
 
 
+def srgb_to_linsrgb(srgb):
+    if srgb >= 0.04045:
+        return ((srgb+0.055)/1.055)**2.4
+    else:
+        return (srgb/12.92)
+
+
 def gen_images(context):
     props = context.scene.test_pg
     me_id = me_red = me_green = me_blue = me_alpha = me_hex = me_hue = me_sat = me_val = me_desc = None
@@ -95,6 +102,7 @@ def gen_images(context):
             my_red = float(r)/255.0
             my_green = float(g)/255.0
             my_blue = float(b)/255.0
+        # default colorsys is srgb so do not linearize color
         img.generated_color = (my_red, my_green, my_blue, my_alpha)
 
 
@@ -115,7 +123,7 @@ def save_icons(context):
         if img.name in icon_names:
             img.save_render(os.path.join(my_icons_dir, f"{img.name}.png"))
             # print(f"{img.name}.png\tsaved")
-            
+
 
 class TEST_OT_save_icons(bpy.types.Operator):
     """Tooltip"""

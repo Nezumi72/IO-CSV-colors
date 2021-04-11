@@ -9,24 +9,41 @@ def srgb_to_linsrgb(srgb):
         return (srgb/12.92)
 
 
-class OBJECT_OT_apply_to_vp_obj(bpy.types.Operator):
-    bl_idname = "object.obj_vp_color"
-    bl_label = "Apply color to obj viewport color"
+class MATERIAL_OT_assign_lsrgb(bpy.types.Operator):
+    bl_idname = "material.assign_lsrgb"
+    bl_label = "Add selected to material input"
+
+    mat: bpy.props.StringProperty(
+        name="mat_name",
+        default="Material",
+    )
+    node: bpy.props.StringProperty(
+        name="node_name",
+        default="",
+    )
+    ipname: bpy.props.StringProperty(
+        name="ipname",
+        default="",
+    )
 
     @classmethod
     def poll(cls, context):
         my_props = context.scene.test_pg
-        cond1 = context.view_layer.objects.active
-        cond2 = context.object.type == 'MESH'
-        cond3 = my_props.color_list
-        return cond1 and cond2 and cond3
+        ob = context.object
+        if ob:
+            cond1 = True
+        else:
+            cond1 = False
+        return cond1
 
     def execute(self, context):
         print(f"{self.bl_idname} pressed")
         my_props = context.scene.test_pg
-        obj = context.view_layer.objects.active
+        my_mat = bpy.data.materials[self.mat]
+        my_node = my_mat.node_tree.nodes[self.node]
+        my_ip = my_node.inputs[self.ipname]
         me = my_props.f_details[my_props.color_list]
-        # these need to be gamma corrected to linear
+        # material colors seem to want linear color data
         if 'red_scaled' in me.keys():
             r = me.red_scaled
             g = me.green_scaled
@@ -45,14 +62,12 @@ class OBJECT_OT_apply_to_vp_obj(bpy.types.Operator):
         r = srgb_to_linsrgb(r)
         g = srgb_to_linsrgb(g)
         b = srgb_to_linsrgb(b)
-        obj.color[0] = r
-        obj.color[1] = g
-        obj.color[2] = b
+        my_ip.default_value = (r, g, b, 1.0)
         return {'FINISHED'}
 
 
 classes = [
-    OBJECT_OT_apply_to_vp_obj,
+    MATERIAL_OT_assign_lsrgb,
     ]
 
 

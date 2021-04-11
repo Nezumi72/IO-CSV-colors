@@ -1,5 +1,6 @@
 import bpy
 
+
 def print_csv(context):
     props = context.scene.test_pg
     for detail in props['f_details']:

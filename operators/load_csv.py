@@ -4,6 +4,13 @@ import csv
 from ..config import config
 
 
+def srgb_to_linsrgb(srgb):
+    if srgb >= 0.04045:
+        return ((srgb+0.055)/1.055)**2.4
+    else:
+        return (srgb/12.92)
+
+
 def upd_color_list(self, context):
     pcoll = config.icons_dict["thumbnail_previews"]
     my_props = context.scene.test_pg
@@ -70,6 +77,7 @@ def upd_color_list_cb(self, context):
     upd_color_list(self, context)
     return None
 
+
 def load_csv(context):
     props = context.scene.test_pg
     props.f_details.clear()
@@ -108,16 +116,19 @@ def load_csv(context):
                 me.id_name = me.id_name.replace(")", "")
                 me.id_name = me.id_name.replace("-", "")
                 me.id_name = me.id_name.replace("&", "")
-                me.name = me.id_name
+                me.name = me.id_name  # modified to rename to idname
             if me_red != None:
                 me.red = row[me_red]
                 me.red_scaled = float(me.red)/(props.maplist[me_red].scale)
+                # me.red_scaled = srgb_to_linsrgb(me.red_scaled) # gamma correction
             if me_green != None:
                 me.green = row[me_green]
                 me.green_scaled = float(me.green)/(props.maplist[me_green].scale)
+                # me.green_scaled = srgb_to_linsrgb(me.green_scaled) # gamma correction
             if me_blue != None:
                 me.blue = row[me_blue]
                 me.blue_scaled = float(me.blue)/(props.maplist[me_blue].scale)
+                # me.blue_scaled = srgb_to_linsrgb(me.blue_scaled) # gamma correction
             if me_alpha != None:
                 me.alpha = row[me_alpha]
                 me.alpha_scaled = float(me.alpha)/(props.maplist[me_alpha].scale)
@@ -162,7 +173,6 @@ class TEST_OT_load_csv(bpy.types.Operator):
             except TypeError:
                 pass
         return {'FINISHED'}
-
 
 
 classes = [
